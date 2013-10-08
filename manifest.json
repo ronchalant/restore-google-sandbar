@@ -10,17 +10,9 @@
 	"description": "Removes the App Launcher, restoring the sandbar (\"black \"bar) on Google pages",
 	"version": "0.1",
 	"icons": { 
-		"16": "images/no-app-launcher-16.png",
-		"48": "images/no-app-launcher-48.png"
-		//, "128": "images/icon_128.png"
+		"48": "images/sandbar-icon-48.png",
+		"128": "images/sandbar-icon-128.png"
 	},
-	/*
-	"background": {
-		"scripts": [
-			"src/background.js"
-		]
-	},
-	*/
 
 	"permissions": [
 		"https://mail.google.com/*"
