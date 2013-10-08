@@ -6,7 +6,7 @@
 		"name": "Ron Rudy"
 	} ],
 
-	"name": "Restore Google Sandbar",
+	"name": "Restore Apps Sandbar",
 	"description": "Removes the App Launcher, restoring the sandbar (\"black \"bar) on Google pages",
 	"version": "0.1",
 	"icons": { 
