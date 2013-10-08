@@ -9,26 +9,29 @@
 	"name": "Restore Google Sandbar",
 	"description": "Removes the App Launcher, restoring the sandbar (\"black \"bar) on Google pages",
 	"version": "0.1",
-/*
 	"icons": { 
-		"16": "images/icon_16.png",
-		"48": "images/icon_48.png",
-		"128": "images/icon_128.png"
+		"16": "images/no-app-launcher-16.png",
+		"48": "images/no-app-launcher-48.png"
+		//, "128": "images/icon_128.png"
 	},
+	/*
 	"background": {
 		"scripts": [
 			"src/background.js"
 		]
 	},
-*/
+	*/
 
 	"permissions": [
 		"https://mail.google.com/*"
+		,"https://www.google.com/calendar/*"
 	],
 
 	"content_scripts": [ {
 		"css": [],
-		"js": ["src/jquery.js", "app/restore.js"],
-		"matches": ["http://*/*", "https://*/*"]
-	}]
+		"js": ["src/jquery.js", "app/restore.js"] 
+		, "matches": ["http://mail.google.com/*", "https://mail.google.com/*", "https://www.google.com/calendar/*"]
+	}],
+
+	"web_accessible_resources": ["src/jquery.min.map"]
 }
