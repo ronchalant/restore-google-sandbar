@@ -12,12 +12,6 @@
       $options = $('div[role=list] ul li a[data-pid]', $gb);
 
 
-    console.log($tilePopup);
-    console.log($options);
-
-
-
-
     if ($options.length) {
       var $sandbar = window.$sandbar = $('<div style="padding: 0.2em; font-size: 13px; white-space: nowrap; background-color: black; display: block; color: white"></div>').prependTo($gb);
       $nav.css({ "margin-bottom": "0px" });
@@ -28,7 +22,7 @@
         // restylize
         $options.prop({ "class": '', "style": '' })
           .css({
-            "padding": "0.1em 1em",
+            "padding": "0.1em 0.75em",
             "color": "white",
             "font-weight": "bold",
             "text-decoration": "none"
@@ -43,6 +37,7 @@
 
   };
   if (!this.jQuery) {
+    console.log('no jQuery?');
     var body = document.getElementsByTagName("body")[0];
     var script = document.createElement('script');
     var that = this;
@@ -57,4 +52,4 @@
   else {
     init();
   }
-})();
+}).call(window);
