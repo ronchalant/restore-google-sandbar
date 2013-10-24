@@ -1,5 +1,5 @@
 (function() { 
-  var $, init;
+  var $, init, tries = 0;
 
   init = function() {
   // possible filter? .filter(function(idx) { return $(this).prop('href').})
@@ -8,8 +8,8 @@
     var $gb = $('#gb'),
       $nav = $gb.closest('[role=navigation]'),
       $gbwa = $('#gbwa'),
-      $tilePopup = $('a[aria-haspopup=true].gb_n', $gb).filter(function(idx) { return /^https?:\/\/www\.google\.com\/intl\/[a-z]{2}\/options\/?$/.test($(this).prop('href')); }),
-      $options = $('div[role=list] ul li a[data-pid]', $gb);
+      $tilePopup = $('a[aria-haspopup=true].gb_n', $gbwa).filter(function(idx) { return /^https?:\/\/www\.google\.com\/intl\/[a-z]{2}\/options\/?$/.test($(this).prop('href')); }),
+      $options = $('ul li a[data-pid]', $gbwa);
 
 
     if ($options.length) {
@@ -32,12 +32,14 @@
       });
 
       $tilePopup.remove();
-
     }
-
+    else if (tries++ < 10) {
+      // probably a better way to do this, but I'm being lazy ATM.
+      console.log("trying again");
+      setTimeout(init, 250);
+    }
   };
   if (!this.jQuery) {
-    console.log('no jQuery?');
     var body = document.getElementsByTagName("body")[0];
     var script = document.createElement('script');
     var that = this;
