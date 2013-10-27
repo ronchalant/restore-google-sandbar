@@ -35,9 +35,30 @@
         }
         
         // add
+        var text = $app.text(),
+          minWidth;
+
+        switch (text.length) {
+          case 1:
+          case 2:
+          case 3:
+          case 4: 
+          case 5: 
+            minWidth = '3em';
+            break;
+
+          case 6:
+            minWidth = '4em';
+            break;
+
+          default:
+            minWidth = '5em';
+            break;
+        }
+
         oneclicks["pid_" + pid] = true;
         saveOneClicks();
-        return $('<a target="_blank" style="margin-left: 0.5em !important; min-width: 0px"></a>')
+        return $('<a target="_blank" style="margin-left: 0.5em !important; min-width: ' + minWidth + '"></a>')
           .attr({
             href: $app.prop('href'),
             "data-pid": $app.data('pid'),

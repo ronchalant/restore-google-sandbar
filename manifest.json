@@ -6,9 +6,9 @@
 		"name": "Ron Rudy"
 	} ],
 
-	"name": "Google Apps - Single Click",
+	"name": "Single Click for for Google™ Apps",
 	"description": "Allow users to select apps from App Launcher that will give single-click access",
-	"version": "0.3",
+	"version": "0.4",
 	"icons": { 
 		"48": "images/sandbar-icon-48.png",
 		"128": "images/sandbar-icon-128.png"
@@ -23,7 +23,7 @@
 	"content_scripts": [ {
 		"css": [],
 		"js": ["src/jquery.js", "app/restore.js"] 
-		, "matches": ["http://mail.google.com/*", "https://mail.google.com/*", "https://www.google.com/calendar/*"]
+		, "matches": ["http://mail.google.com/*", "https://mail.google.com/*", "https://www.google.com/*"]
 	}],
 
 	"web_accessible_resources": ["src/jquery.min.map"]
