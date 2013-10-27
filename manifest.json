@@ -6,17 +6,18 @@
 		"name": "Ron Rudy"
 	} ],
 
-	"name": "Restore Apps Sandbar",
-	"description": "Removes the App Launcher, restoring the sandbar (\"black \"bar) on Google pages",
-	"version": "0.2",
+	"name": "Google Apps - Single Click",
+	"description": "Allow users to select apps from App Launcher that will give single-click access",
+	"version": "0.3",
 	"icons": { 
 		"48": "images/sandbar-icon-48.png",
 		"128": "images/sandbar-icon-128.png"
 	},
 
 	"permissions": [
-		"https://mail.google.com/*"
-		,"https://www.google.com/calendar/*"
+		"storage"
+		,"https://mail.google.com/*"
+		,"https://www.google.com/*"
 	],
 
 	"content_scripts": [ {
