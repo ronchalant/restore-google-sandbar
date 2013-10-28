@@ -36,11 +36,10 @@
     // google query box, then stash one node below that guy towards gbq.  all because that guy needs to 
     // get cut down to size a bit as we add these one-clicks.
     // CURRENTLY this is just the parent of #gbq, but who knows how googlez might change up their stuff?
-    resizeQuery = (function() {
+    (function() {
         var $gplusParents = $gplus.parentsUntil("#gb"),
           $gbqParents = $gbq.parentsUntil("#gb"),
-          $toResize = undefined;
-
+		  $toResize = undefined;
 
         $gbqParents.each(function(gbqidx, gbqnode) {
           // if shared, pick the last one and exit
@@ -56,32 +55,13 @@
         });
 
         if ($toResize && $toResize.length) {
-          return function(size) {
-            $toResize.css("width", size);
-          };
-        }
-        else {
-          return $.noop;
+			$toResize.css("flex-shrink", "20");
         }
     })();
 
     (function() {
-      var $container = $gplus.parent(),
-        adjust = function() {
-          var clicks = oneclickCount();
-          if (clicks > 3) {
-            resizeQuery('375px');
-          }
-          else if (clicks > 2) {
-            resizeQuery('400px');
-          }
-          else if (clicks > 1) {
-            resizeQuery('425px');
-          }
-          else {
-            resizeQuery('');
-          }
-        };
+      var $container = $gplus.parent();
+	  
       // $app = anchor of the application we're toggling; should have something like:
       //  <a class="gb_a" id="gb8" href="https://maps.google.com/maps?hl=en&amp;tab=ml&amp;authuser=1" target="_blank" data-pid="8" data-ved="0CAcQwS4oBA"><span class="gb_c" style="background-position:-104px 0"></span><span class="gb_d">Maps</span></a>
       addOneClick = window.addOneClick = function($app) {
@@ -117,7 +97,6 @@
 
         oneclicks["pid_" + pid] = true;
         saveOneClicks();
-        adjust();
 
         return $('<a target="_blank" style="margin-left: 0.5em !important; min-width: ' + minWidth + '"></a>')
           .attr({
@@ -138,7 +117,6 @@
         if ($oneclick.length) {
           oneclicks["pid_" + pid] = false;
           saveOneClicks();
-          adjust();
           return $oneclick.remove();
         }
       };      
