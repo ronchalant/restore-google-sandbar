@@ -8,7 +8,7 @@
 
 	"name": "Single Click for for Google™ Apps",
 	"description": "Allow users to select apps from App Launcher that will give single-click access",
-	"version": "0.4",
+	"version": "0.5",
 	"icons": { 
 		"48": "images/sandbar-icon-48.png",
 		"128": "images/sandbar-icon-128.png"

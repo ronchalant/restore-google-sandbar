@@ -8,11 +8,22 @@
     var $gb = $('#gb'),
       $nav = $gb.closest('[role=navigation]'),
       $gbwa = $('#gbwa'),
+      $gbq = $('#gbq'), // query box container
       $tilePopup = $('a[aria-haspopup=true].gb_n', $gbwa).filter(function(idx) { return /^https?:\/\/www\.google\.com\/intl\/[a-z]{2}\/options\/?$/.test($(this).prop('href')); }),
       $options = $('ul li a[data-pid]', $gbwa),
     oneclicks = JSON.parse(localStorage.getItem("oneClickItems") || "{}"),
     saveOneClicks = function() { localStorage.setItem("oneClickItems", JSON.stringify(oneclicks)); },
+    oneclickCount = function() {
+      var count = 0, p = undefined;
+      for (p in oneclicks) {
+        if (oneclicks[p] === true) {
+          count++;
+        }
+      }
+      return count;
+    },
     addOneClick = $.noop,
+    resizeQuery = $.noop,
     removeOneClick = $.noop;
 
   // if we have google plus link, it's easier...
@@ -21,8 +32,56 @@
 // console.log($gplus);
   
   if ($gplus.length) {
+    // ok this is pretty ugly .. but we need to get the first shared parent of the gplus block and the 
+    // google query box, then stash one node below that guy towards gbq.  all because that guy needs to 
+    // get cut down to size a bit as we add these one-clicks.
+    // CURRENTLY this is just the parent of #gbq, but who knows how googlez might change up their stuff?
+    resizeQuery = (function() {
+        var $gplusParents = $gplus.parentsUntil("#gb"),
+          $gbqParents = $gbq.parentsUntil("#gb"),
+          $toResize = undefined;
+
+
+        $gbqParents.each(function(gbqidx, gbqnode) {
+          // if shared, pick the last one and exit
+          $gplusParents.each(function(gplusidx, gplusnode) {
+            if (gbqnode === gplusnode) {
+              $toResize = $($gbqParents[Math.max(0, gbqidx-1)]);
+              return false;
+            }
+          });
+          if ($toResize !== undefined) {
+            return false;
+          }
+        });
+
+        if ($toResize && $toResize.length) {
+          return function(size) {
+            $toResize.css("width", size);
+          };
+        }
+        else {
+          return $.noop;
+        }
+    })();
+
     (function() {
-      var $container = $gplus.parent();
+      var $container = $gplus.parent(),
+        adjust = function() {
+          var clicks = oneclickCount();
+          if (clicks > 3) {
+            resizeQuery('375px');
+          }
+          else if (clicks > 2) {
+            resizeQuery('400px');
+          }
+          else if (clicks > 1) {
+            resizeQuery('425px');
+          }
+          else {
+            resizeQuery('');
+          }
+        };
       // $app = anchor of the application we're toggling; should have something like:
       //  <a class="gb_a" id="gb8" href="https://maps.google.com/maps?hl=en&amp;tab=ml&amp;authuser=1" target="_blank" data-pid="8" data-ved="0CAcQwS4oBA"><span class="gb_c" style="background-position:-104px 0"></span><span class="gb_d">Maps</span></a>
       addOneClick = window.addOneClick = function($app) {
@@ -58,6 +117,8 @@
 
         oneclicks["pid_" + pid] = true;
         saveOneClicks();
+        adjust();
+
         return $('<a target="_blank" style="margin-left: 0.5em !important; min-width: ' + minWidth + '"></a>')
           .attr({
             href: $app.prop('href'),
@@ -76,7 +137,8 @@
 // console.log('removeOneClick([data-pid=' + pid + '])');        
         if ($oneclick.length) {
           oneclicks["pid_" + pid] = false;
-          saveOneClicks()
+          saveOneClicks();
+          adjust();
           return $oneclick.remove();
         }
       };      
