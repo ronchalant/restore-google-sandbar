@@ -175,11 +175,12 @@
     script.type = "text/javascript";
     script.src = "//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js";
     script.onload = function() {
-      init.call(that);
+      that.jQuery = jQuery.noConflict();
+      (init||jQuery.noop).call(that);
     };
     body.appendChild(script);
   }
   else {
-    init();
+    init(this.jQuery);
   }
 }).call(window);
